@@ -1,0 +1,4 @@
+4 <== address
+28 <== value at [0] (is an address)
+-1 <== value at [0][0] (is -1)
+-3 <== value at [0][0] (is -3)

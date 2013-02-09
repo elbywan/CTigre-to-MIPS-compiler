@@ -1,0 +1,20 @@
+/* This program show that for:
+     - simple variable => we have by-value calling
+     - structured vars => we have by-reference calling
+ */
+type intArray = array of int in
+var x := 42 in
+var tab := intArray[3] of -1 in
+
+function f(x, y) =
+  x := x+10;
+  y[0] := x;
+  print("inside x:");printint(x);print("\n");
+  print("inside tab[0]:");printint(y[0]);print("\n")
+in
+
+print("before x:");printint(x);print("\n");
+print("before tab[0]:");printint(tab[0]);print("\n");
+f(x,tab);
+print("after x:");printint(x);print("\n");
+print("after tab[0]:");printint(tab[0]);print("\n")

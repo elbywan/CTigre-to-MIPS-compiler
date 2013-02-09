@@ -1,0 +1,11 @@
+type int_list = {hd : int, tl: int_list} in
+
+var x := nil in
+
+x := (int_list {hd=5, tl= int_list{hd=9, tl=x}});
+
+var t := x in
+for i=1 to 5 do
+  print(">> "); printint(t.hd);print("\n");
+  t := t.tl
+done

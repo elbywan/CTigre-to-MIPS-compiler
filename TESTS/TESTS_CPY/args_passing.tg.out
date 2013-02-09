@@ -1,0 +1,7 @@
+before x:42
+before tab[0]:-1
+inside x:52
+inside tab[0]:52
+after x:42
+after tab[0]:52
+

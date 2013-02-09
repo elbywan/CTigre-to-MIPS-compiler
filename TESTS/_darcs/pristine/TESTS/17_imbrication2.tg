@@ -1,0 +1,10 @@
+function f(i:string) : int =
+  function g() : string =
+    function h () : char =
+      function i (b:char) : char =
+        b
+      in
+     h () in
+  g() in
+  2
+in f (2)

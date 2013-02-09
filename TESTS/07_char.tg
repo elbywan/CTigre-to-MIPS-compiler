@@ -1,0 +1,11 @@
+type a = int in
+var a := 3 in 
+function f(x:a) =
+  var b := 
+    var a := 'A'
+    in ord(a)+x
+  in 
+  print("Ord(A)+"); printint(x); print (" = "); printint(b); 
+  print("\na vaut "); printint(a)
+in 
+f(a)

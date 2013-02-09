@@ -1,0 +1,7 @@
+type intlist = { hd : int , tl : intlist } in
+var lis : intlist := intlist { hd = 0 , tl = lis } in
+var l := intlist { hd = 10 , tl = l2 }
+and l2 := intlist { hd = 2 , tl = l } in 
+printint(l2.tl.hd);
+print("\n");
+printint(lis.tl.hd)

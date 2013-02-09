@@ -1,0 +1,14 @@
+type intArray = array of int
+and couple = {fst : int, snd : int} in
+var x := 0 in
+
+
+
+
+var tab := intArray[2] of (intArray[2] of x:=x-1; x) in
+
+printint(tab);print(" <== address\n");
+printint(tab[1]);print(" <== value at [0] (is an address)\n");
+
+printint(tab[0][0]);print(" <== value at [0][0] (is -1)\n");
+printint(tab[1][0]);print(" <== value at [0][0] (is -3)")

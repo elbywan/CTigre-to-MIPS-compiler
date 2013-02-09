@@ -1,0 +1,11 @@
+function f () : int =
+ var a := 3 in
+ function g () : char =
+   var a := 'b' in a
+ in
+ function h () : int =
+   a
+ in
+ 2
+in f()
+

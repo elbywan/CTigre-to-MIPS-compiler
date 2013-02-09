@@ -1,0 +1,3 @@
+function nplusn(n:int) : int = n + n in 
+/* this is a comment */ 
+printint(nplusn(10))

@@ -1,0 +1,22 @@
+
+declaration de fonction dans le for : 
+
+28 26 24 22 20 18 16 14 12 
+
+fonctions imbriquees et masquage de variable :
+
+fact(6) = 720
+
+Affichage et operations sur les tableaux :
+
+a[0]= 1
+a[1]= 1
+a[2]= 2
+a[3]= 6
+a[4]= 24
+a[5]= 120
+a[6]= 720
+a[7]= 5040
+a[8]= 40320
+a[9]= 362880
+

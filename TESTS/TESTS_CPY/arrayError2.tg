@@ -1,0 +1,4 @@
+type intArray = array of int in
+var tab := intArray[12] of 0 in
+printint(tab[12]);
+print("dead code\n")

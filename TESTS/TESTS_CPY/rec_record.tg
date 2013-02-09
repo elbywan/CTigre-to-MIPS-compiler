@@ -1,0 +1,24 @@
+type intlist = { hd : int, tl : intlist} in
+type intarr = array of int in
+
+/*var tab := intarr[5] of 0 in */
+
+var l1 := intlist { hd = 1, tl = l2} 
+and l2 := intlist { hd = 2, tl = l1} in
+
+print("l1: ");
+printint(l1.hd);print(" ");
+printint(l1.tl.hd);print(" ");
+printint(l1.tl.tl.hd);print(" ");
+printint(l1.tl.tl.tl.hd);print(" ");
+
+
+
+print("\n");
+print("l2: ");
+printint(l2.hd);print(" ");
+printint(l2.tl.hd);print(" ");
+printint(l2.tl.tl.hd);print(" ");
+printint(l2.tl.tl.tl.hd);print(" ")
+
+

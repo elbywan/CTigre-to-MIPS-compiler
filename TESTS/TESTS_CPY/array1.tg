@@ -1,0 +1,12 @@
+var N := 5 in
+type  int_array = array of int in
+
+var x := 0
+and tab := int_array[N] of x := x+1; x
+in
+
+
+
+  for i=0 to N-1 do
+    print("tab[");printint(i);print("] => ");printint(tab[i]);print("\n")
+  done

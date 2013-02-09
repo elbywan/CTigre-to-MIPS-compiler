@@ -1,0 +1,10 @@
+type tree = { key : int, children : treelist }
+and  treelist = { hd : tree, tl : treelist } in
+var t0 := tree { key = 0, children = nil }
+and t1 := tree { key = 1, children = treelist { hd = t0, tl = nil }}
+and t2 := tree { 
+  key = 2, 
+  children = treelist { hd = t1, tl = treelist { hd = t0, tl = nil }}
+}
+in
+printint(t2.children.hd.key)  

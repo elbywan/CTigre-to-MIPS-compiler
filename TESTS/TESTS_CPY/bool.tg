@@ -1,0 +1,10 @@
+type a = {a:int} in
+if true then (
+  if false then (
+    nil
+  ) else (
+    print("hello\n")
+  )
+) else (
+  nil
+)

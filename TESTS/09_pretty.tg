@@ -1,0 +1,27 @@
+type tree = { key : string, left : tree, right : tree } in 
+function pretty(tree:tree) : string =
+ var output := "" in 
+ function write(s:string) = 
+   output:=concat(output,s)
+ in
+ function show(n:int, t:tree) =
+   function indent(s:string) = 
+     for i=1 to n do write(" ") done;
+     write("|_");
+     write(s);
+     output:=concat(output,"\n")
+   in
+   if t=nil
+   then indent(".")
+   else (indent(t.key);
+         show(n+2,t.left);
+         show(n+2,t.right))
+   in
+   show(0,tree); output
+in
+var lr := tree { key="LR", left=nil, right=nil} in
+var l := tree { key="L", left=nil, right=lr } in
+var rl := tree { key="RL", left=nil, right=nil} in
+var r := tree { key="R", left=nil, right=rl } in
+var t := tree { key="Top", left=l, right=r } in
+print(pretty(t));print("\n")

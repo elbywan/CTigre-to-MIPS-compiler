@@ -1,0 +1,4 @@
+type intArray = array of intArray in
+var t := intArray [2] of t in
+
+printint(t[1][0][0][1])

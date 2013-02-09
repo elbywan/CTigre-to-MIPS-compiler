@@ -1,0 +1,13 @@
+/* This program test arrays of arrays */
+type intArray = array of int in
+type intMatrix = array of intArray in
+
+var N := 3
+and x := 100 in
+var matrix := intMatrix[N] of (intArray[N] of x:=x+1; x) in
+
+for i=0 to N-1 do
+  for j=0 to N-1 do
+    print("[");printint(i);print("][");printint(j);print("] = ");printint(matrix[i][j]);print("\n")
+  done
+done

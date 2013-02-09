@@ -1,0 +1,21 @@
+type int_list = {hd : int, tl: int_list} in
+var x := 4
+and l1 := int_list {hd=1, tl=nil}
+and l2 := int_list {tl=nil, hd=2}
+and l3 := int_list {hd=3, tl=int_list {hd=x, tl=l2}} in
+
+
+printint(l1.hd);print(" <== l1.hd (1)\n");
+printint(l1.tl);print(" <== l1.tl (0)\n");
+
+printint(l2.hd);print(" <== l2.hd (2)\n");
+printint(l2.tl);print(" <== l2.tl (0)\n");
+
+printint(l3.hd);print(" <== l3.hd (3)\n");
+printint(l3.tl);print(" <== l3.tl (@)\n");
+
+printint(l3.tl.hd);print(" <== l3.tl.hd (4)\n");
+printint(l3.tl.tl);print(" <== l3.tl.tl (@)\n");
+
+printint(l3.tl.tl.hd);print(" <== l3.tl.tl.hd = l2.hd (2)\n");
+printint(l3.tl.tl.tl);print(" <== l3.tl.tl.tl = l2.tl (0)\n")

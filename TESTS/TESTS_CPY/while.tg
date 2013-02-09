@@ -1,0 +1,5 @@
+var i:=1 in
+  while i<=10 do
+    printint(i);print("\n");
+    i:=i+1
+  done

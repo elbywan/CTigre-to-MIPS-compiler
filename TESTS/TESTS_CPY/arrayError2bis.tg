@@ -1,0 +1,6 @@
+type intArray = array of int in
+var tab := nil in
+
+tab := (intArray[12] of 0);
+printint(tab[12]);
+print("dead code\n")

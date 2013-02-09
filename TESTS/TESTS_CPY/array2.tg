@@ -1,0 +1,27 @@
+/* Initialize an array with the finobacci numbers */
+var N := 10
+and x := -1 in
+type int_array = array of int in
+
+
+
+/* Fibonacci function */
+function fibo (n : int) =
+  if n=0 then (
+    0
+  ) else (
+    if n=1 then (
+      1
+    ) else (
+      fibo(n-1) + fibo(n-2)
+    )
+  )
+in
+
+/* Initialisation of an array with the fibonacci sequence */
+var tab := int_array[10] of x:=x+1;fibo(x) in
+
+/* Print the array */
+for i=0 to N-1 do
+  print("tab[");printint(i);print("] => ");printint(tab[i]);print("\n")
+done

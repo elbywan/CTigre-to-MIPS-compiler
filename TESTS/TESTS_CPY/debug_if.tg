@@ -1,0 +1,4 @@
+function f() =
+  printint(if 1 then printint(42);print("...\n"))
+in
+  f()

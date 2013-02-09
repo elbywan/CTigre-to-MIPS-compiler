@@ -1,0 +1,39 @@
+var N := 100 in
+
+type Tableau = array of int in
+
+function TriInsertion (a:Tableau) =
+  var j := 0
+  and v := 0 in
+  for i = 1 to N-1 do
+    v := a[i]; j := i;
+    while j > 0 & a[j-1] > v do  /* Attention : & doit etre paresseux */
+      a[j] := a[j-1];
+      j:= j-1
+    done;
+    a[j] := v
+  done 
+in
+
+/* Un generateur basique de nombres vaguement dans le desordre */
+
+function TableauAlea(init:int) : Tableau = 
+  var a := Tableau [N] of 0 in
+  function modulo(p,q) = p - (p/q)*q in
+  var n := init in
+  for i = 0 to N-1 do
+    n := modulo(n*23,97);
+    a[i] := n
+  done;
+  a
+in
+
+function AfficheTableau (a:Tableau) =
+  for i = 0 to N-1 do
+    print("a["); printint(i); print("]= "); printint(a[i]); print("\n")
+  done
+in
+
+var a := TableauAlea(31) in
+TriInsertion(a);
+AfficheTableau(a)

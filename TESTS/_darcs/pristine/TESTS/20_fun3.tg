@@ -1,0 +1,7 @@
+function g (a : int) : int =
+ if a=0 then 0 
+ else a+3+h(a-1)
+and h(b : int) : int =
+  if b=0 then 0 
+  else g(b-1)
+in g(3)

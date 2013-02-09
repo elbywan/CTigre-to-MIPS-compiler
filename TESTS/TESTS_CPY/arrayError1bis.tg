@@ -1,0 +1,5 @@
+type intArray = array of int in
+var tab := nil in
+
+tab := intArray[0] of 0;
+print("dead code\n")

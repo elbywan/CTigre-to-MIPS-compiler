@@ -1,0 +1,5 @@
+"hello world";
+"hello";
+var v := 0 in v;
+function f(x,y,c,n,s) = x+y in printint(f(2,0,'B',nil,"Hello World!"));
+v := f(2,0,'B',nil,"Hello World!")

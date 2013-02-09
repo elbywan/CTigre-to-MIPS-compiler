@@ -1,0 +1,3 @@
+type intArray = array of int in
+var tab := intArray[0] of 0 in
+print("dead code\n")

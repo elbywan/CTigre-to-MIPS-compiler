@@ -1,0 +1,4 @@
+type intList = {hd : int, tl : intList} in
+var l := nil in
+
+l.hd

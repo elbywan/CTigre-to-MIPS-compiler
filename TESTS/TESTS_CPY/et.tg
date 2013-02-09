@@ -1,0 +1,4 @@
+if 3 > 5 & (print("pas paresseux!\n"); true) then
+  print("oui\n")
+else
+  print("non\n")

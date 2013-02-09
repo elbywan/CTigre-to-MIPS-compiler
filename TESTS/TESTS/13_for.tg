@@ -1,0 +1,11 @@
+var i := 0 in
+function f(x:int) : int =
+  (x+1)
+in
+function g(y:int) : int =
+  for j=0 to (f(y)) do
+    printint(j)
+  done;
+  2
+in
+g(4)

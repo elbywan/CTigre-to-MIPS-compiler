@@ -1,0 +1,5 @@
+/* Test the evaluation order of function arguments */
+function f(x : int, y : int) =
+  x + y
+in
+  printint(f(print("left\n");3, print("right\n");2))

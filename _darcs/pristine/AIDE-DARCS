@@ -1,0 +1,263 @@
+
+ PETIT MANUEL POUR L'UTILISATION DE DARCS EN PROJET DE COMPIL
+
+   Pierre Letouzey  (prenom.nom@pps.jussieu.fr)
+
+Le manuel de Darcs: http://www.darcs.net/manual/
+Reste de la documentation: http://wiki.darcs.net/DarcsWiki
+
+Mini-Lexique:
+-------------
+
+ archive darcs : un repertoire dans lequel certains fichiers voient
+         leurs modifications successives être enregistrées à des moments
+         choisis par l'utilisateur. En pratique, un repertoire est une
+         archive darcs s'il contient un sous-repertoire _darcs, où seront
+         stockées en particuliers les modifications sous forme de patchs.
+
+ patch : un ensemble de modifications, tel qu'on peut l'obtenir avec
+         la commande diff et l'appliquer avec la commande patch.
+
+ URL : ici, endroit où se trouve une archive darcs. Pour nous, cela peut être:
+         - un chemin unix si le contenu est sur la machine locale;
+         - un chemin pour ssh, de la forme machine:/chemin/vers/archive
+            ou machine:chemin/a/partir/de/son/home;
+         - une URL http, de la forme http://machine/chemin
+
+
+O/ L'aide
+---------
+
+ darcs help
+ darcs help CMD
+   Aide generale / aide sur une commande particuliere
+
+1/ La communication
+-------------------
+
+ darcs get URL
+   A ne faire qu'une fois, permet de récupérer toute une archive darcs
+   située à une certaine URL.
+
+ darcs pull
+ darcs pull URL
+  Récupère les nouveautés contenues dans une archive distante.
+  Si on omet l'URL, c'est la dernière URL utilisée qui est reprise
+
+ darcs push
+ darcs push URL
+  Propage les changements locaux vers l'archive distante.
+  Évidemment, il faut avoir le droit d'écrire dans l'archive distante.
+
+2/ L'inspection
+---------------
+
+ darcs changes
+  Affiche l'historique des patches enregistrés pour l'achive courante.
+  L'option « -s » permet d'avoir un sommaire de chaque patch.
+
+ darcs what
+ darcs whatsnew
+  Affiche la liste des modifications de l'archive courante depuis
+  le dernier enregistrement.  L'option « -u » donne du contexte,
+  « -s » ne donne qu'un sommaire. A noter aussi l'option « -l »
+  qui liste également les fichiers non-gérés par darcs.
+
+3/ La sauvegarde
+----------------
+
+ darcs record
+  La commande essentielle: enregistre sous un certain nom les
+  modifications courantes de l'archive. Par défaut, on inspecte
+  avant cela toutes les modifications une par une, ce qui peut etre
+  assez vite lassant. La touche "a" (pour all) permet de tout
+  accepter. ATTENTION: on n'enregistre que les fichiers connus de
+  darcs (donc pensez à faire des darcs add)
+
+ darcs add FICHIER(S)
+  Signale à darcs que les fichiers en question sont importants
+  et devront etre pris en compte lors des enregistrements de
+  modifications ulterieures. ATTENTION: rien n'est archivé par
+  cette commande, le "vrai" travail est fait par darcs record.
+
+ darcs mv OLD NEW
+  Renomme un fichier et informe Darcs du renommage. Comme pour la
+  commande add, le vrai travail sera fait par le prochain record.
+
+4/ Le retour en arriere
+-----------------------
+
+ darcs revert
+  Pour se débarrasser de modifications pas encore enregistrées,
+  et que l'on juge finalement pas intéressantes. ATTENTION:
+  par définition, se débarasser d'une modification non-enregistrée,
+  revient à la perdre définitivement (en fait darcs unrevert
+  permet d'annuler un revert, mais uniquement le dernier...)
+
+ darcs rollback
+  Pour revenir en arrière concernant un patch enregistré précis.
+  N'a pas d'effet sur les patchs enregistrés (en particulier le
+  patch défait reste dans l'historique), mais enchainer cette
+  commande avec un darcs record revient à enregistrer le patch
+  inverse de celui qu'on veut défaire.
+
+ATTENTION: il existe d'autres manières de revenir en arrière,
+mais elles peuvent s'avérer dangeureuses (perte une fois pour
+toute du patch). En particulier:
+
+ darcs unrecord
+  Annule le dernier record. ATTENTION: vous ne devez jamais faire
+  unrecord pour un patch qui a été propagé à l'aide de push.
+
+
+5/ L'organisation des archives darcs
+------------------------------------
+
+Darcs est un systeme de gestion de versions dit "décentralisé" :
+chaque archive contient toute l'information sur toute l'histoire du
+projet. Si vous travaillez seul et toujours sur la meme machine,
+une seule archive suffit donc. Par contre:
+
+A/ Pour travailler seul avec plusieurs archives:
+
+P.ex. chez soi / à l'ufr. Il suffit juste de propager les changements
+entre les archives dans les deux sens. Pour se faire, le mieux est
+d'utiliser des darcs push et pull sur une URL de la forme
+machine:chemin, ce qui entrainera l'utilisation de ssh.
+
+B/ Pour travailler à plusieurs avec plusieurs archives:
+
+Dès que l'on est plusieurs, il devient malin de se mettre d'accord sur
+une archive qui va jouer le role d'archive centrale, dans laquelle
+personne ne travaille directement (pas de record), mais qui sert à
+tout le monde comme destination des pull/push. Cette année, nous vous
+proposons un script automatique pour la creation d'une telle archive
+centrale commune:
+
+  ssh lucien  #important d'etre sur lucien, et pas ailleurs
+  cree_archive_compil LoginEtudiant1 LoginEtudiant2 ...
+
+Si tout se passe bien, ce script affiche l'URL de l'archive créée.
+Initialement, cette archive ne contient que les fichiers que nous vous
+fournissons, à vous d'y ajouter vos modifications par des darcs push.
+Au cas où la composition d'un binome/trinome changerait au cours du
+projet, il n'y a qu'à recreer tout simplement une nouvelle archive
+commune.
+
+Dans tous les cas de figure, on peut éviter de taper sans arret l'URL
+de l'archive distante: il suffit de l'ecrire dans le fichier
+_darcs/prefs/defaultrepo une fois pour toutes.
+
+
+6/ Quelques dernieres remarques en vrac:
+----------------------------------------
+
+- ATTENTION AUX EFFACEMENTS D'ARCHIVES !! Darcs stocke l'historique
+des modifications enregistrées dans le repertoire _darcs de votre
+archive. Tant que ce repertoire est intact, vous pouvez réparer
+n'importe quel effacement accidentel ailleurs (cf. darcs revert). Par
+contre, si ce repertoire _darcs disparait, toutes vos modifications
+sont perdues. Il convient donc ABSOLUMENT d'avoir au moins une archive
+dans un endroit sûr (p.ex. votre home à l'UFR qui est archivé
+nocturnement) et de la maintenir régulièrement à jour.
+
+- CONFLITS: les commandes darcs pull et push sont susceptibles de
+generer des « conflits » si les modifications locales et distantes ne
+sont pas compatibles. Si cela arrive, il n'y a alors plus qu'à aller
+éditer manuellement les fichiers en question pour résoudre ces
+conflits. En pratique, les usages élémentaires du travail collaboratif
+permettent d'éviter la plupart des conflits: en particulier, évitez
+d'être plusieurs à éditer simultanément la même zone d'un même
+fichier.
+
+- SSH: La machine lucien est désormais directement accessible par ssh
+depuis le reste du monde. On peut donc faire depuis partout des darcs
+pull/push avec des URL parlant de lucien. Il y a d'ailleurs moyen
+d'éviter de taper son mot de passe ssh toutes les trentes secondes,
+voir la partie clés publiques de tout bon tutorial ssh, par exemple
+celui-ci: http://suso.org/docs/shell/ssh.sdf
+
+- SSH et IPv6: Attention, si vous faites parti des « happy few »
+utilisant IPv6, il se peut que le debut de la connection ssh prenne un
+temps déraisonnable (plus d'une minute). Si cela se produit, on peut
+alors forcer l'usage d'IPv4 via sa config ssh (a priori ~/.ssh/config)
+en y ajouter les lignes:
+
+Host lucien
+  HostName lucien.informatique.univ-paris-diderot.fr
+  AddressFamily inet
+
+Après cela, supprimer notre charmant nom de domaine dans les URL pour
+ne plus garder que lucien tout simplement.
+
+- SOUCIS: ne pas hésiter à nous contacter s'il y a d'autres soucis,
+l'usage de darcs dans ce projet est clairement en phase expérimentale.
+
+- FACULTATIF: rien de ce qui précède n'est obligatoire. Si vous
+préférez gérer votre projet en cvs, svn, git, arch, à coup de tar.gz
+ou de battes de baseball, cela vous regarde. Mais sachez que nous
+serons encore moins indulgent que les années précédentes (si cela
+était encore possible) concernant les excuses du genre « j'ai fait un
+rm -rf / malencontreux », « mon ordinateur a flambé », « mon chat est
+mort » etc.
+
+- NON-UNIX: ce qui précède est pensé pour des systèmes à la Unix. Pour
+ceux qui croient pouvoir travailler sérieusement et efficacement sur
+un système dépourvu de base Unix, il existe un darcs.exe.
+
+
+
+
+
+ANNEXE: Comment creer manuellement une archive centrale commune
+---------------------------------------------------------------
+
+ATTENTION: ce qui suit n'est là que pour information. Dans le cadre du
+projet de compilation, utilisez plutot le script cree_archive_compil
+qui fait tout ca automatiquement.
+
+Faire un pull (patchs distants --> local) demande juste de pouvoir
+lire dans l'archive distante, par contre faire un push (envoi des
+patchs locaux --> archive distante) demande de pouvoir ecrire dans
+l'archive distante. Si on souhaite de plus que la terre entiere ne
+puisse pas écrire dans l'archive distante (a priori celle d'un
+camarade de trinome), il va falloir regler les permissions unix, et en
+particulier celles concernant le groupe:
+
+a) Tout d'abord, il faut un groupe unix propre à votre trinome, mais
+sans les autres étudiants (sinon nous autre enseignants n'allons pas
+apprécier). Pour cela:
+
+  ssh lucien      #important d'etre sur lucien, et pas ailleurs
+  make_unix_binome UnNomDeGroupe LoginEtudiant1 LoginEtudiant2 ...
+
+Se déloger et se reloger pour que l'ajout prenne effet. On peut
+vérifier avec la commande id que l'on appartient bien a ce nouveau
+groupe. ATTENTION: ce programme make_unix_binome ne permet que de
+créer un groupe, pas de le modifier ni de le supprimer. C'est voulu.
+Pour apporter un changement à un groupe, on en crée un autre, et on
+signale aux enseignants par mail si des groupes obsoletes peuvent etre
+supprimé.
+
+b) ensuite le proprietaire de l'archive centrale regle les permissions:
+
+  # ne pas etre sur nivose !!
+  cd VotreArchiveCentrale
+  chgrp --recursive VotreNomDeGroupe .
+  chmod g+w,o-rwx --recursive .
+  find . -type d -exec chmod g+s '{}' ';'
+
+Mettre egalement ceci dans _darcs/prefs/defaults de l'archive centrale:
+
+  apply posthook find . -user "$USER" -exec chmod g+w,o-rwx '{}' ';'
+  apply run-posthook
+
+Il semblerait qu'avec un darcs recent, on puisse mettre à la place de
+ces deux lignes ceci:
+
+  ALL umask 007
+
+Et voila, vous pouvez normalement faire des push vers l'archive
+centrale, meme si elle est dans le compte d'un(e) camarade.
+
+

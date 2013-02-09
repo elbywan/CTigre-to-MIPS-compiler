@@ -1,0 +1,46 @@
+type Tableau = array of int in
+
+function fact(n: int) : int =
+  if n = 0 
+  then 1
+  else n * fact(n-1)
+in
+print("\ndeclaration de fonction dans le for : \n\n");
+var K := 3 in
+var N := 10 in
+for i = 1 to N-1 do
+	function toto (n : int) : int =
+		N := N - 1;
+		n + N + N
+	in printint(toto(10));print(" ")
+done;
+print("\n\nfonctions imbriquees et masquage de variable :\n\n");
+var Z := 20 in
+var J := 30 in
+function bidon(n: int, z : int) : int =
+  var a := 2+N+n+z
+  and J := 0 in
+  function truc(z : int) : int = a+z
+  in var b := z + K + J in 
+  function truc2() : int = truc(b) + b in
+  truc(a+truc2())
+in var a := bidon(1,1) in 
+function bidon2() : int = 
+  a + (var a := 0 in a)
+in
+print("fact(6) = ");
+printint(fact(bidon2() - Z - N + 4));
+print("\n\nAffichage et operations sur les tableaux :\n\n");
+function AfficheTableau (a:Tableau, n : int) =
+  for i = 0 to n-1 do
+    print("a["); printint(i); print("]= "); printint(a[i]); print("\n")
+  done
+in
+function createTab (a : Tableau, n : int) =
+	for i = 0 to n-1 do
+		a[i] := fact(i)
+	done
+in
+var a := Tableau [10] of 0 in
+createTab(a,10);
+AfficheTableau(a,10)

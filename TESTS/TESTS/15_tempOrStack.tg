@@ -1,0 +1,7 @@
+var a := 2 in
+function f (x:int) : int =
+  var a := var b := 5 in b+1 in
+  function g () : int = a+a in
+  printint(a)
+in
+f(a)

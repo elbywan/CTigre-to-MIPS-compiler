@@ -1,0 +1,112 @@
+/***** Types récursifs. *****/
+
+type intlist = { hd : int , tl : intlist } in
+
+type tree ={ key : int , children : treelist }
+and treelist = { treehd : tree , treetl : treelist } in
+
+/***** Listes chainées. *****/
+
+/* Crée une liste chainée de l éléments initialisés à val. */
+function create_list (l : int, val : int) = 
+	if l > 0 then
+		intlist { hd = val, tl = (create_list (l-1,val)) }
+	else nil
+in
+
+/* Retourne l'élément à la position "pos" d'une liste chaînée. */
+function get_elem (pos : int, l : intlist) =
+	if pos > 0 then if l.tl <> nil then get_elem(pos-1,l.tl) 
+		        else begin print("get_elem : élément introuvable.\n"); -1 end
+        else if pos = 0 then l.hd 
+	     else begin print("get_elem : position négative.\n"); -1 end
+in
+
+/* Affecte à l'élément à la position "pos" la valeur val. */ 
+function modif_elem (pos : int, l : intlist, val : int) =
+	if pos > 0 then if l.tl <> nil then modif_elem (pos-1,l.tl,val)
+			else begin print("modif_elem : élément introuvable.\n") end
+   else if pos = 0 then l.hd := val
+in
+
+/* Affiche tous les éléments. */
+function print_intlist (l : intlist) =
+	var count := 0 in
+	function rec_print (l: intlist) =
+		print("\nhd[");
+		printint(count);
+		print("] : ");
+		printint(l.hd);
+		count := count + 1;
+		if l.tl = nil then print("\n")
+		else rec_print(l.tl)
+	in rec_print(l)
+in
+
+/* Retourne la taille de la liste. */
+function list_length (l : intlist) =
+	var count := 1 in
+	function rec_length (l : intlist) = 
+		if l.tl = nil then count
+		else begin count := count + 1;
+			   rec_length(l.tl) end
+	in rec_length(l)
+in
+
+/* Ajoute un élément en fin de liste. */
+function list_add (l : intlist, v : int) =
+	if l.tl = nil then l.tl := intlist { hd = v, tl = nil }
+	else list_add(l.tl,v)
+in
+
+/* Ajout un élément à la position "pos". */
+function list_addpos (l : intlist, v : int, p : int) =
+	if p > 0 then if l.tl <> nil then list_addpos(l.tl,v,p-1)
+		      else begin
+			   l.tl := intlist { hd = v, tl = nil }
+		      end
+	else begin
+	     var temp := intlist { hd = l.hd, tl = l.tl } in
+	     l.hd := v; l.tl := temp
+	end
+in
+
+/* Retire un élément à la position "pos" et retourne la nouvelle liste. */
+function remove_listpos (l : intlist, p : int) =
+	if p > 0 then if l.tl <> nil then intlist { hd = l.hd, tl = remove_listpos(l.tl,p-1) }
+		      else nil
+	else l.tl
+in
+
+/* Empile un élément et retourne la nouvelle liste. */
+function list_empile (l :intlist, v : int) = intlist { hd = v, tl = l } in
+
+
+
+/*****  Corps du main *****/           
+
+var lis : intlist := intlist { hd = 3, tl = nil } in
+var lis2 : intlist := intlist { hd = 2, tl = lis } in
+var lis3 : intlist := intlist { hd = 1 , tl = lis2 } in
+list_addpos(lis3,0,0);
+list_add(lis,4);
+lis3 := remove_listpos(lis3,0);
+lis3 := list_empile(lis3,0);
+
+print("\n");
+print("Affichage de lis3 :");
+print_intlist(lis3);
+
+print("\n");
+var newlist : intlist := create_list(10,1) in
+var count := 0 in
+for i = 0 to (list_length(newlist) - 1) do 
+	if i = 0 then count := count + 1 else 
+	if i = 1 then count := count + 2 else
+	begin count := count + get_elem(i-2,newlist) end;
+	modif_elem(i,newlist,count)
+done;
+print("Affichage de newlist :");
+print_intlist(newlist)
+
+

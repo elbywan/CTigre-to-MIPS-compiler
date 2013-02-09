@@ -1,0 +1,13 @@
+hunk ./TESTS/00_test.tg 4
+-  var a := 3 in
+hunk ./TESTS/00_test.tg 31
+-print("fact(4) = ");
+-printint(fact(bidon2() - Z - N - 4));
++print("fact(6) = ");
++printint(fact(bidon2() - Z - N + 4));
+hunk ./TESTS/00_test.tg.out 4
+-28 26 24 22 20 
++28 26 24 22 20 18 16 14 12 
+hunk ./TESTS/00_test.tg.out 8
+-fact(4) = 720
++fact(6) = 720

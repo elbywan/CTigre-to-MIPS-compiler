@@ -1,0 +1,7 @@
+var a := 3 in 
+var b := 5 in
+function nplusn(n:int) : int = n + a in
+var a := 2 in
+function npln(h:int) : int = h +  2 in
+var d := 5+5 in
+printint(nplusn(a))

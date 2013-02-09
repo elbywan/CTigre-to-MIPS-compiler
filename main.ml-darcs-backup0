@@ -1,0 +1,21 @@
+open Printf
+open PrettyPrint
+
+exception Erreur_de_syntaxe of int ;;
+
+(* compute AST *)
+
+let _ =
+   for i = 1 to Array.length Sys.argv - 1 do
+	let chan_in = open_in Sys.argv.(i) in
+	let lexbuf = Lexing.from_channel chan_in in
+	try 
+		let ast = Parser.programme Lexer.token lexbuf in
+		print ast;
+		fprintf stdout "\nDone.\n";
+		( close_in chan_in ); ast
+	with Parsing.Parse_error ->
+             ( close_in chan_in );
+             raise (Erreur_de_syntaxe(Lexing.lexeme_start lexbuf));
+   done
+

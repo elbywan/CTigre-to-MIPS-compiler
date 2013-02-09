@@ -1,0 +1,3 @@
+var i : int := 1 and
+b:= (function g()=4+i in g())
+in printint(b)
