@@ -1,5 +1,0 @@
-type list = { hd : int, tl : list} in
-var l : list := 
-  list { hd = 1, tl = list { hd = 2, tl = list { hd = 3, tl = nil }}}
-in 
-printint(l.tl.hd)

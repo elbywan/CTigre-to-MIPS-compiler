@@ -1,6 +1,19 @@
-.*
-# except for .gitignore
-!.gitignore
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
 
-*.class
-/bin
+# ocamlbuild working directory
+_build
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# darcs
+_darcs

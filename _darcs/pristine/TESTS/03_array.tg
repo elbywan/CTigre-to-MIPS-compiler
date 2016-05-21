@@ -1,4 +1,0 @@
-type  arrtype = array of int in
-var arr1:arrtype := arrtype [10] of 0 in
-arr1[3] := 5; 
-printint(arr1[3])              
